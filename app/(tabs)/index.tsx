@@ -2,6 +2,8 @@ import { ScrollView,Image, Text, View, ImageBackground, TextInput } from 'react-
 import React from 'react'
 import SearchBar from '@/components/SearchBar';
 import { useRouter } from 'expo-router';
+import { useFetch } from '@/hooks/useFetch';
+import { fetchMovies } from '@/services/api';
 
 // Banner
 const BANNER = require('../../assets/flixhubimages/john-wick.jpeg');
@@ -9,6 +11,10 @@ const BANNER = require('../../assets/flixhubimages/john-wick.jpeg');
 const index = () => {
   const router = useRouter();
 
+  const {data: movies, isLoading, error} = useFetch(() => fetchMovies({
+    query: ""
+  }))
+  console.log('Movies', movies)
 
   return (
     <View className='flex-1 bg-darkBg'>

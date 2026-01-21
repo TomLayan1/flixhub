@@ -1,9 +1,9 @@
 export const TMDB_CONFIG = {
   BASE_URL: process.env.EXPO_PUBLIC_TMDB_BASEURL,
-  API_KEY: process.env.EXPO_PUBLIC_FLIXHUB_API_KEY,
+  API_KEY: process.env.EXPO_PUBLIC_TMDB_READ_TOKEN,
   headers: {
     accept: 'application/json',
-    authorization: `Bearer ${process.env.EXPO_PUBLIC_FLIXHUB_API_KEY}`
+    authorization: `Bearer ${process.env.EXPO_PUBLIC_TMDB_READ_TOKEN}`
   }
 }
 
@@ -12,14 +12,14 @@ export const fetchMovies = async({ query }: { query: any}) => {
   ? `/search/movie?query=${encodeURIComponent(query)}`
   : '/discover/movie?sort_by=popularity.desc'
 
-  const response = await fetch(`${endpoint}`, {
+  const response = await fetch(`${TMDB_CONFIG.BASE_URL}${endpoint}`, {
     method: 'GET',
     headers: TMDB_CONFIG?.headers
   })
 
   if (!response.ok) {
     // @ts-ignore
-    throw new Error('Failed to fetch movies', response.statusText)
+    throw new Error(`Failed to fetch movies: ${response.statusText}`)
   }
 
   const data = await response.json();
