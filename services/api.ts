@@ -23,5 +23,18 @@ export const fetchMovies = async({ query }: { query: any}) => {
   }
 
   const data = await response.json();
-  return data
+  return data.results;
+}
+
+export const fetchMovieDetails = async({id}: { id: number}) => {
+  const endpoint = `/keyword/${encodeURIComponent(id)}`;
+
+  const response = await fetch(`${TMDB_CONFIG.BASE_URL}${endpoint}`, {
+    method: 'GET',
+    headers: TMDB_CONFIG.headers
+  })
+
+  if (!response.ok) {
+    throw new Error(`Movie details cannot be found: {}` )
+  }
 }

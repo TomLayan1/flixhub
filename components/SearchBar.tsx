@@ -1,8 +1,6 @@
-import { ScrollView,Image, Text, View, ImageBackground, TextInput } from 'react-native'
-import React from 'react'
-
-// icon
-const search = require('../constants/icons/search.png');
+import React from 'react';
+import { Image, View, TextInput } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 type SearchBarPropsType = {
   onPress: () => void;
@@ -12,12 +10,12 @@ type SearchBarPropsType = {
 const SearchBar = ({ onPress, placeholder }: SearchBarPropsType) => {
   return (
     <View className='w-full absolute left-0 top-16'>
-      <View className='bg-white/10 w-[95%] mx-auto border border-gray-400 flex-row items-center pl-3 rounded-xl overflow-hidden'>
-        <Image source={search} className='' />
+      <View className='bg-white/10 w-[95%] mx-auto border border-textDark flex-row items-center pl-3 rounded-xl overflow-hidden'>
+        <Ionicons name="search" size={20} color='#FFFFFF' />
         <TextInput
-          className='flex-1 h-full px-3 text-greyText text-lg'
+          className='flex-1 h-full px-3 text-textDark text-lg'
           placeholder={placeholder}
-          placeholderTextColor="#9ca3af"
+          placeholderTextColor="#FFFFFF"
           onPress={onPress}
           value=''
           onChange={() => {}}
