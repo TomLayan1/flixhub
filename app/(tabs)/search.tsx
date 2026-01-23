@@ -14,7 +14,7 @@ const search = () => {
 
   const { data: movies, isLoading, error, refetch, reset } = useFetch<MovieType[]>(() => fetchMovies({
     query: searchQuery
-  }), )
+  }), false)
   console.log('Movies', movies);
 
   if (error) {
@@ -23,15 +23,16 @@ const search = () => {
 
   // Refetch movies if there's a search query
   useEffect(() => {
-    const refetchMovie = async() =>{
+    const timeoutId = setTimeout(async() =>{
       if (searchQuery?.trim()) {
         await refetch();
       } else {
         reset();
       }
-    }
+    }, 500);
 
-    refetchMovie();
+    return () => clearTimeout(timeoutId)
+
   }, [searchQuery])
 
   return (
@@ -60,6 +61,13 @@ const search = () => {
             {!isLoading && !error && movies && movies?.length > 0 && (
               <Text className='text-textDark text-2xl font-bold ml-2 mt-4 mb-2'>Search Result for {searchQuery}</Text>
             )}
+          </>
+        )}
+        ListEmptyComponent={() => (
+          <>
+            {!isLoading && !error ? (
+              <Text className='text-grayText text-lg text-center mt-10'>{searchQuery?.trim() ? "No movie found" : "Search for a movie"}</Text>
+            ) : null}
           </>
         )}
       />
