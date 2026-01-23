@@ -3,22 +3,24 @@ import { Image, View, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 type SearchBarPropsType = {
-  onPress: () => void;
+  onPress?: () => void;
   placeholder: string;
+  value?: string;
+  onChangeText?: (text: string) => void;
 }
 
-const SearchBar = ({ onPress, placeholder }: SearchBarPropsType) => {
+const SearchBar = ({ onPress, placeholder, value, onChangeText }: SearchBarPropsType) => {
   return (
-    <View className='w-full absolute left-0 top-16'>
+    <View className='w-full absolute left-0 top-14 z-30'>
       <View className='bg-white/10 w-[95%] mx-auto border border-textDark flex-row items-center pl-3 rounded-xl overflow-hidden'>
         <Ionicons name="search" size={20} color='#FFFFFF' />
         <TextInput
           className='flex-1 h-full px-3 text-textDark text-lg'
           placeholder={placeholder}
           placeholderTextColor="#FFFFFF"
-          onPress={onPress}
-          value=''
-          onChange={() => {}}
+          onFocus={onPress}
+          value={value}
+          onChangeText={onChangeText}
         />
       </View>
     </View>

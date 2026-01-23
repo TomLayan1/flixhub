@@ -1,6 +1,7 @@
-import { Image, Pressable, Text, View } from 'react-native'
+import { Image, Pressable, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { Link } from 'expo-router'
+import { Ionicons } from '@expo/vector-icons';
 const BANNER = require('../assets/flixhubimages/john-wick.jpeg')
 
 
@@ -12,11 +13,11 @@ export interface MovieCardsType {
   release_date: string
 }
 
-const MovieCards:React.FC<MovieCardsType> = ({ id, title, poster_path, vote_average }) => {
+const MovieCards: React.FC<MovieCardsType> = ({ id, title, poster_path, vote_average, release_date }) => {
   // console.log(poster_path)
   return (
     <Link href={`/movie/${id}`} asChild>
-      <Pressable  className='w-[140px] ml-2 flex-col'>
+      <TouchableOpacity  className='w-[140px] flex-col'>
         <View className='w-full h-56 mb-2 rounded-lg overflow-hidden'>
           <Image 
             // source={BANNER}
@@ -29,11 +30,18 @@ const MovieCards:React.FC<MovieCardsType> = ({ id, title, poster_path, vote_aver
             resizeMode='contain'
           />
         </View>
-        <Text 
-          className='text-textDark text-lg'
-          numberOfLines={1}
-        >{title}</Text>
-      </Pressable>
+        <View className='pl-1'>
+          <Text 
+            className='text-textDark text-lg mb-1'
+            numberOfLines={1}
+          >{title}</Text>
+          <View className='flex-row'>
+            <Ionicons name='star' size={14} color='#0077B6' />
+            <Text className='text-blueColor'>{Math.round(vote_average / 2)}</Text>
+          </View>
+          <Text className='text-grayText'>{release_date?.split('-')[0]}</Text>
+        </View>
+      </TouchableOpacity>
     </Link>
   )
 }

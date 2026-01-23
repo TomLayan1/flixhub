@@ -41,11 +41,10 @@ const index = () => {
 
         {/* Recent movies */}
         <View className=''>
-          <Text className='text-textDark text-2xl font-bold ml-2 mt-5 mb-2.5'>Recent view</Text>
+          <Text className='text-textDark text-2xl font-bold ml-2 mt-5 mb-2.5'>Recent movies</Text>
           <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          // contentContainerStyle={{ paddingHorizontal:  }}
+            horizontal
+            showsHorizontalScrollIndicator={false}
           >
             {(movies ?? []).map(movie => (
               <MovieCards {...movie} key={movie.id} />

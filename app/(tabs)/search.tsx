@@ -1,11 +1,69 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { ActivityIndicator, FlatList, Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'expo-router';
+import useFetch from '@/hooks/useFetch';
+import { fetchMovies } from '@/services/api';
+import { MovieType } from '@/interfaces';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import MovieCards from '@/components/MovieCards';
+import SearchBar from '@/components/SearchBar';
 
 const search = () => {
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState<string>("")
+
+  const { data: movies, isLoading, error, refetch, reset } = useFetch<MovieType[]>(() => fetchMovies({
+    query: searchQuery
+  }), )
+  console.log('Movies', movies);
+
+  if (error) {
+    return <Text>Error: {error.message}</Text>
+  }
+
+  // Refetch movies if there's a search query
+  useEffect(() => {
+    const refetchMovie = async() =>{
+      if (searchQuery?.trim()) {
+        await refetch();
+      } else {
+        reset();
+      }
+    }
+
+    refetchMovie();
+  }, [searchQuery])
+
   return (
-    <View>
-      <Text>search</Text>
-    </View>
+    <SafeAreaView className='flex-1 bg-darkBg px-2 pt-20'>
+      <SearchBar
+        placeholder='Search for a movie...'
+        value={searchQuery ?? ""}
+        onChangeText={(text) => setSearchQuery(text)}
+      />
+      <FlatList 
+        data={movies}
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={3}
+        columnWrapperStyle={{
+          justifyContent: 'center',
+          marginVertical: 6
+        }}
+        renderItem={({item}) => (
+          <View>
+            <MovieCards {...item} />
+          </View>
+        )}
+        ListHeaderComponent={() => (
+          <>
+            {isLoading && (<ActivityIndicator size="large" color="#0077B6" className='mt-10 self-center' />)}
+            {!isLoading && !error && movies && movies?.length > 0 && (
+              <Text className='text-textDark text-2xl font-bold ml-2 mt-4 mb-2'>Search Result for {searchQuery}</Text>
+            )}
+          </>
+        )}
+      />
+    </SafeAreaView>
   )
 }
 

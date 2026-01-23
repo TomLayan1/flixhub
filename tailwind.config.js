@@ -14,7 +14,7 @@ module.exports = {
         pinkColor: "#9ECAE1",
         textDark: "#FFFFFF",
         textLight: "#000000",
-        greyText: "#AB8BFF"
+        grayText: "#4B5563"
       }
     } 
   },
