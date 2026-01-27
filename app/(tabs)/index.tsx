@@ -16,7 +16,6 @@ const index = () => {
   const { data: movies, isLoading, error } = useFetch<MovieType[]>(() => fetchMovies({
     query: ""
   }))
-  console.log('Movies', movies);
 
   if (isLoading) {
     return <ActivityIndicator size="large" color="blue" className='mt-10 self-center' />
@@ -41,7 +40,7 @@ const index = () => {
 
         {/* Recent movies */}
         <View className=''>
-          <Text className='text-textDark text-2xl font-bold ml-2 mt-5 mb-2.5'>Recent movies</Text>
+          <Text className='text-textDark text-2xl font-bold ml-2 mt-5 mb-2.5'>Movies</Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}

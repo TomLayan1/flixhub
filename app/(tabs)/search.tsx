@@ -7,6 +7,7 @@ import { MovieType } from '@/interfaces';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MovieCards from '@/components/MovieCards';
 import SearchBar from '@/components/SearchBar';
+import { updateSearchQuery } from '@/services/appwrite';
 
 const search = () => {
   const router = useRouter();
@@ -35,6 +36,12 @@ const search = () => {
 
   }, [searchQuery])
 
+  useEffect(() => {
+    if (movies?.length! > 0 && movies?.[0]) {
+      updateSearchQuery(searchQuery, movies[0])
+    }
+  }, [movies])
+
   return (
     <SafeAreaView className='flex-1 bg-darkBg px-2 pt-20'>
       <SearchBar
@@ -50,6 +57,7 @@ const search = () => {
           justifyContent: 'center',
           marginVertical: 6
         }}
+        // Render movie card
         renderItem={({item}) => (
           <View>
             <MovieCards {...item} />
@@ -63,6 +71,7 @@ const search = () => {
             )}
           </>
         )}
+        // If there's not result from search
         ListEmptyComponent={() => (
           <>
             {!isLoading && !error ? (
