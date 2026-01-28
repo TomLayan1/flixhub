@@ -3,9 +3,11 @@ import React from 'react'
 import SearchBar from '@/components/SearchBar';
 import { useRouter } from 'expo-router';
 import { useFetch } from '@/hooks/useFetch';
-import { fetchMovies } from '@/services/api';
+import { fetchMovies, fetchSeries } from '@/services/api';
 import { MovieType } from '@/interfaces';
 import MovieCards from '@/components/MovieCards';
+import { getTrendingMovies } from '@/services/appwrite';
+import TrendingMovieCards from '@/components/TrendingMovies';
 
 // Banner
 const BANNER = require('../../assets/flixhubimages/john-wick.jpeg');
@@ -13,16 +15,23 @@ const BANNER = require('../../assets/flixhubimages/john-wick.jpeg');
 const index = () => {
   const router = useRouter();
 
-  const { data: movies, isLoading, error } = useFetch<MovieType[]>(() => fetchMovies({
+  const { data: trendingMovies, isLoading: trendingLoadind, error: trendingError } = useFetch(getTrendingMovies);
+
+  const { data: movies, isLoading: moviesLoading, error: moviesError } = useFetch<MovieType[]>(() => fetchMovies({
     query: ""
   }))
 
-  if (isLoading) {
+  const { data: series, isLoading: seriesLoading, error: seriesError } = useFetch<MovieType[]>(() => fetchSeries({
+    query: ""
+  }))
+  console.log('Series: ', series)
+
+  if (moviesLoading) {
     return <ActivityIndicator size="large" color="blue" className='mt-10 self-center' />
   }
 
-  if (error) {
-    return <Text>Error: {error.message}</Text>
+  if (moviesError) {
+    return <Text>Error: {moviesError.message}</Text>
   }
 
   return (
@@ -38,6 +47,21 @@ const index = () => {
             />
         </View>
 
+        {trendingMovies && (
+          <>
+            <Text className='text-textDark text-2xl font-bold ml-2 mt-5 mb-2.5'>Trending Movies</Text>
+            <FlatList 
+              data={trendingMovies}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              keyExtractor={(item) => item.movie_id.toString()}
+              renderItem={({item, index}) => (
+                <TrendingMovieCards {...item} index={index} />
+              )}
+            />
+          </>
+        )}
+
         {/* Recent movies */}
         <View className=''>
           <Text className='text-textDark text-2xl font-bold ml-2 mt-5 mb-2.5'>Movies</Text>
@@ -47,6 +71,19 @@ const index = () => {
           >
             {(movies ?? []).map(movie => (
               <MovieCards {...movie} key={movie.id} />
+            ))}
+          </ScrollView>
+        </View>
+
+        {/* Recent movies */}
+        <View className='mb-24'>
+          <Text className='text-textDark text-2xl font-bold ml-2 mt-5 mb-2.5'>Series</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          >
+            {(series ?? []).map(serie => (
+              <MovieCards {...serie} key={serie.id} />
             ))}
           </ScrollView>
         </View>

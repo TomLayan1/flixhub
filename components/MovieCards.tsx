@@ -1,9 +1,7 @@
-import { Image, Pressable, Text, TouchableOpacity, View } from 'react-native'
+import { Image, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { Link } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons';
-const BANNER = require('../assets/flixhubimages/john-wick.jpeg')
-
 
 export interface MovieCardsType {
   id: number;

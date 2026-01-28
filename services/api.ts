@@ -27,23 +27,6 @@ export const fetchMovies = async({ query }: { query: any}) => {
   return data.results;
 }
 
-// Fetch movie details
-export const fetchMovieDetails = async({id}: { id: number}) => {
-  const endpoint = `/keyword/${encodeURIComponent(id)}`;
-
-  const response = await fetch(`${TMDB_CONFIG.BASE_URL}${endpoint}`, {
-    method: 'GET',
-    headers: TMDB_CONFIG.headers
-  })
-
-  if (!response.ok) {
-    throw new Error(`Movie details cannot be found: ${response.statusText}`)
-  }
-
-  const data = await response.json();
-  return data
-}
-
 // Fetch series
 export const fetchSeries = async ({ query }: { query: any }) => {
   const endpoint = query
@@ -62,4 +45,21 @@ export const fetchSeries = async ({ query }: { query: any }) => {
 
   const data = await response.json();
   return data.results;
+}
+
+// Fetch movie details
+export const fetchMovieDetails = async({id}: { id: number}) => {
+  const endpoint = `/keyword/${encodeURIComponent(id)}`;
+
+  const response = await fetch(`${TMDB_CONFIG.BASE_URL}${endpoint}`, {
+    method: 'GET',
+    headers: TMDB_CONFIG.headers
+  })
+
+  if (!response.ok) {
+    throw new Error(`Movie details cannot be found: ${response.statusText}`)
+  }
+
+  const data = await response.json();
+  return data
 }

@@ -1,5 +1,5 @@
 import { Client, Databases, ID, Query } from 'react-native-appwrite';
-import { MovieType } from "@/interfaces";
+import { MovieType, TrendingMoviesType } from "@/interfaces";
 const ENDPOINT = process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!;
 const PROJECT_ID = process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!;
 const DATABASE_ID = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!;
@@ -16,7 +16,8 @@ export const updateSearchQuery = async(query: string, movies: MovieType ) => {
     databaseId: DATABASE_ID,
     collectionId: COLLECTION_ID,
     queries: [
-      Query.equal('search_term', query)
+      Query.equal('movie_id', movies.id),
+      Query.limit(1)
     ],
   });
 
@@ -57,6 +58,23 @@ export const updateSearchQuery = async(query: string, movies: MovieType ) => {
     console.log(err);
     throw err;
   }
+}
 
+export const getTrendingMovies = async(): Promise<TrendingMoviesType[] | undefined> => {
+  try {
+    const result = await database.listDocuments({
+      databaseId: DATABASE_ID,
+      collectionId: COLLECTION_ID,
+      queries: [
+        Query.limit(5),
+        Query.orderDesc('count')
+      ],
+    });
 
+    return result?.documents as unknown as TrendingMoviesType[];
+  }
+  catch(err) {
+    console.log(err);
+    return undefined
+  }
 }
