@@ -4,10 +4,11 @@ import SearchBar from '@/components/SearchBar';
 import { useRouter } from 'expo-router';
 import { useFetch } from '@/hooks/useFetch';
 import { fetchMovies, fetchSeries } from '@/services/api';
-import { MovieType } from '@/interfaces';
+import { MovieType, SeriesType } from '@/interfaces';
 import MovieCards from '@/components/MovieCards';
 import { getTrendingMovies } from '@/services/appwrite';
 import TrendingMovieCards from '@/components/TrendingMovies';
+import SeriesCards from '@/components/SeriesCards';
 
 // Banner
 const BANNER = require('../../assets/flixhubimages/john-wick.jpeg');
@@ -21,7 +22,7 @@ const index = () => {
     query: ""
   }))
 
-  const { data: series, isLoading: seriesLoading, error: seriesError } = useFetch<MovieType[]>(() => fetchSeries({
+  const { data: series, isLoading: seriesLoading, error: seriesError } = useFetch<SeriesType[]>(() => fetchSeries({
     query: ""
   }))
   console.log('Series: ', series)
@@ -76,14 +77,14 @@ const index = () => {
         </View>
 
         {/* Recent movies */}
-        <View className='mb-24'>
+        <View className='mb-28'>
           <Text className='text-textDark text-2xl font-bold ml-2 mt-5 mb-2.5'>Series</Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
           >
             {(series ?? []).map(serie => (
-              <MovieCards {...serie} key={serie.id} />
+              <SeriesCards {...serie} key={serie.id} />
             ))}
           </ScrollView>
         </View>

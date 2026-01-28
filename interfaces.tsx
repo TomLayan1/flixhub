@@ -1,6 +1,10 @@
-// types/movie.ts
+
+export interface TrendingMoviesType {
+  movie_id: number;
+  poster_url: string;
+  title: string
+}
 export interface MovieType {
-  adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
   id: number;
@@ -16,8 +20,18 @@ export interface MovieType {
   vote_count: number;
 }
 
-export interface TrendingMoviesType {
-  movie_id: number;
-  poster_url: string;
-  title: string
+export interface SeriesType {
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  original_language: string;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  first_air_date: string;
+  title: string;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
 }
