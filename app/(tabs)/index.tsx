@@ -25,7 +25,6 @@ const index = () => {
   const { data: series, isLoading: seriesLoading, error: seriesError } = useFetch<SeriesType[]>(() => fetchSeries({
     query: ""
   }))
-  console.log('Series: ', series)
 
   if (moviesLoading) {
     return <ActivityIndicator size="large" color="blue" className='mt-10 self-center' />

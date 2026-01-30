@@ -48,18 +48,22 @@ export const fetchSeries = async ({ query }: { query: any }) => {
 }
 
 // Fetch movie details
-export const fetchMovieDetails = async({id}: { id: number}) => {
-  const endpoint = `/keyword/${encodeURIComponent(id)}`;
+export const fetchMovieDetails = async (movieId: string) => {
+  try {
+    const response = await fetch(`${TMDB_CONFIG.BASE_URL}/movie/${movieId}?api_key=${TMDB_CONFIG.API_KEY}`, {
+      method: 'GET',
+      headers: TMDB_CONFIG.headers
+    })
 
-  const response = await fetch(`${TMDB_CONFIG.BASE_URL}${endpoint}`, {
-    method: 'GET',
-    headers: TMDB_CONFIG.headers
-  })
+    if(!response.ok) {
+      throw new Error(`Movie details cannot be found: ${response.statusText}`)
+    }
 
-  if (!response.ok) {
-    throw new Error(`Movie details cannot be found: ${response.statusText}`)
+    const data = await response.json();
+    return data;
   }
-
-  const data = await response.json();
-  return data
+  catch(error) {
+    console.log(error);
+    throw error;
+  }
 }

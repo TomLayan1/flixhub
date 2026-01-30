@@ -5,6 +5,7 @@ export default function RootLayout() {
   return <Stack
     screenOptions={{
       animation: "none",
+      headerShown: false
     }}
   >
     <Stack.Screen 

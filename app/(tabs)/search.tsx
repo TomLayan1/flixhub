@@ -16,7 +16,6 @@ const search = () => {
   const { data: movies, isLoading, error, refetch, reset } = useFetch<MovieType[]>(() => fetchMovies({
     query: searchQuery
   }), false)
-  console.log('Movies', movies);
 
   if (error) {
     return <Text>Error: {error.message}</Text>
