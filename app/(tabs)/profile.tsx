@@ -1,9 +1,7 @@
 import React from 'react';
-import { Image, ScrollView, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Link } from 'expo-router'
 import Settings from '@/components/profileComponents/Settings';
-import Theme from '@/components/profileComponents/Theme';
 
 // Profile pic
 const profilePic = require('../../assets/flixhubimages/profile_img.jpg')
