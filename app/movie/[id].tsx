@@ -30,39 +30,39 @@ const MovieDetails = () => {
               </TouchableOpacity>
           </View>
           <View className='w-full px-3'>
-            <Text className='text-textDark text-2xl font-bold mb-3'>{details?.title}</Text>
+            <Text className='text-lightText text-2xl font-bold mb-3'>{details?.title}</Text>
               <View className='flex-row gap-1 mb-3'>
                 <Ionicons name='star' size={16} color='#0077B6' />
-                <Text className='text-textDark text-xl'>{details?.vote_average}</Text>
+                <Text className='text-lightText text-xl'>{details?.vote_average}</Text>
               </View>
             <View className='flex-row gap-5 mb-5'>
-              <Text className='text-textDark bg-blueColor/15 border border-blueColor p-3 rounded-full'>{details?.origin_country}</Text>
-              <Text className='text-textDark bg-blueColor/15 border border-blueColor p-3 rounded-full'>{details?.release_date.split('-')[0]}</Text>
+              <Text className='text-lightText bg-blueColor/15 border border-blueColor p-3 rounded-full'>{details?.origin_country}</Text>
+              <Text className='text-lightText bg-blueColor/15 border border-blueColor p-3 rounded-full'>{details?.release_date.split('-')[0]}</Text>
               <View className='flex-row gap-5'>
                 {details?.genres?.map((genre: any) => (
-                  <Text key={genre.id} className='text-textDark bg-blueColor/15 border border-blueColor p-3 rounded-full'>{genre.name}</Text>
+                  <Text key={genre.id} className='text-lightText bg-blueColor/15 border border-blueColor p-3 rounded-full'>{genre.name}</Text>
                 ))}
               </View>
             </View>
             <View className='mb-5'>
               <Text className='text-blueColor text-2xl mb-3'>Overview</Text>
-              <Text className='text-textDark text-lg'>{details?.overview}</Text>
+              <Text className='text-lightText text-lg'>{details?.overview}</Text>
             </View>
             <View className='flex-row gap-14 mb-3'>
                 {details?.budget > 0 && <View className=''>
                 <Text className='text-blueColor text-lg mb-1'>Budget</Text>
-                <Text className='text-textDark text-lg'>{`${details?.budget / 1_000_000} million`}</Text>
+                <Text className='text-lightText text-lg'>{`${details?.budget / 1_000_000} million`}</Text>
               </View>}
                 {details?.revunue > 0 && <View className=''>
                   <Text className='text-blueColor text-lg mb-1'>Revenue</Text>
-                  <Text className='text-textDark text-lg'>{`${details?.revunue / 1_000_000} million`}</Text>
+                  <Text className='text-lightText text-lg'>{`${details?.revunue / 1_000_000} million`}</Text>
               </View>}
             </View>
             <View>
               <Text className='text-blueColor text-lg mb-2'>Production Companies</Text>
               <View className='flex-row flex-wrap gap-5'>
                 {details?.production_companies?.map((companies: any) => (
-                  <Text key={companies.id} className='text-textDark bg-blueColor/15 border border-blueColor p-3 rounded-full'>{companies.name}</Text>
+                  <Text key={companies.id} className='text-lightText bg-blueColor/15 border border-blueColor p-3 rounded-full'>{companies.name}</Text>
                 ))}
               </View>
             </View>
