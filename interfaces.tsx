@@ -49,3 +49,9 @@ export interface DetailsType {
   vote_average: number;
   vote_count: number;
 }
+export interface PlanType {
+  id: number;
+  name: string;
+  trialPeriod: number;
+  amount: number
+}
