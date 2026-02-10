@@ -31,7 +31,8 @@ const Plan = ({ plan, setPlan, selectedPlan, setSelectedPlan, setSuccessful }: P
   // selected && setSelectedPlan(selected);
   
   const selectPlan = (value: string) => {
-    setPlan(value);
+    const selectedPlan = PLANS?.find(plan => plan.name === value);
+    selectedPlan && setSelectedPlan(selectedPlan);
   }
 
   return (

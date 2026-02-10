@@ -15,9 +15,10 @@ const SUB_BENEFIT: string[] = [
 
 
 const subscription = () => {
-  const [plan, setPlan] = useState<string>("Starter");
+  const [plan, setPlan] = useState<string>("");
   const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(null);
-  const [successful, setSuccessful] = useState<boolean>(false)
+  const [successful, setSuccessful] = useState<boolean>(false);
+  console.log('Plan: ', plan)
   console.log('Selected Plan: ', selectedPlan);
 
   return (
