@@ -1,6 +1,7 @@
-import { Image, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
+import { Image, Text, TouchableOpacity, View } from 'react-native'
 import { useRouter } from 'expo-router';
+
 const crown = require('@/assets/flixhubimages/crown.png')
 
 type SuccessPropsType = {
@@ -12,7 +13,7 @@ const Success = ({ setSuccessful }:SuccessPropsType ) => {
 
   const handleSuccessPop = () => {
     setSuccessful(false);
-    router.push('/(tabs)/profile'); // change to your target route
+    router.push('/(tabs)/profile');
   };
 
   return (

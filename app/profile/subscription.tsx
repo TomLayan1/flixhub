@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Image, ScrollView, Text, View } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { PlanType } from '@/interfaces';
-import Plan from './Plan'
+import Plan from '../../components/profileComponents/Plan'
 import Success from '@/components/profileComponents/Success'
 
 const crown = require('@/assets/flixhubimages/crown.png')
@@ -15,11 +15,8 @@ const SUB_BENEFIT: string[] = [
 
 
 const subscription = () => {
-  const [plan, setPlan] = useState<string>("");
   const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(null);
   const [successful, setSuccessful] = useState<boolean>(false);
-  console.log('Plan: ', plan)
-  console.log('Selected Plan: ', selectedPlan);
 
   return (
     <ScrollView
@@ -49,7 +46,7 @@ const subscription = () => {
         </View>
 
         {/* Subscription plans */}
-        <Plan plan={plan} setPlan={setPlan} selectedPlan={selectedPlan} setSelectedPlan={setSelectedPlan} setSuccessful={setSuccessful} />
+        <Plan selectedPlan={selectedPlan} setSelectedPlan={setSelectedPlan} setSuccessful={setSuccessful} />
       </View>
     </ScrollView>
   )

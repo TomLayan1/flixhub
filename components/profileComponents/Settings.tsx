@@ -2,6 +2,7 @@ import { Platform, Pressable, Switch, Text, TouchableOpacity, View } from 'react
 import React, { useState } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import Theme from './Theme';
+import { Link } from 'expo-router';
 
 const Settings = () => {
   const [enableNotification, setEnableNotification] = useState<boolean>(false);
@@ -19,7 +20,7 @@ const Settings = () => {
       {/* Notification */}
       <View className='flex-row items-center justify-between mb-6'>
         <View className='flex-row items-center gap-4'>
-          <View className='bg-blueColor/15 items-center justify-center p-3 rounded-full'>
+          <View className='w-[48px] h-[48px] bg-blueColor/15 items-center justify-center p-3 rounded-full'>
             <Ionicons name='notifications' color='#0077B6' size={25} />
           </View>
           <Text className='text-lightText text-xl font-bold'>Notification</Text>
@@ -51,7 +52,7 @@ const Settings = () => {
       {/* Autoplay */}
       <View className='flex-row items-center justify-between mb-8'>
         <View className='flex-row items-center gap-4'>
-          <View className='bg-blueColor/15 items-center justify-center p-3 rounded-full'>
+          <View className='w-[48px] h-[48px] bg-blueColor/15 items-center justify-center p-3 rounded-full'>
             <Ionicons name='videocam' color='#0077B6' size={25} />
           </View>
           <Text className='text-lightText text-xl font-bold'>Autoplay Video</Text>
@@ -70,15 +71,27 @@ const Settings = () => {
       <Theme />
 
       {/* Language */}
-      <TouchableOpacity className='flex-row items-center justify-between mb-24'>
+      <TouchableOpacity className='flex-row items-center justify-between mb-6'>
         <View className='flex-row items-center gap-4'>
-          <View className='bg-blueColor/15 items-center justify-center p-3 rounded-full'>
+          <View className='w-[48px] h-[48px] bg-blueColor/15 items-center justify-center p-3 rounded-full'>
             <Ionicons name='document' color='#0077B6' size={25} />
           </View>
           <Text className='text-lightText text-xl font-bold'>Contact Support</Text>
         </View>
         <Ionicons name='chevron-forward' color='#4B5563' size={20} />
       </TouchableOpacity>
+
+      <Link href='/profile/deleteAccout' className='w-full mb-24'>
+        <View className='w-full flex-row items-center justify-between'>
+          <View className='flex-row items-center gap-4'>
+            <View className='w-[48px] h-[48px] bg-blueColor/15 items-center justify-center p-3 rounded-full'>
+              <Ionicons name='trash' color='#0077B6' size={25} />
+            </View>
+            <Text className='text-lightText text-xl font-bold'>Delete Account</Text>
+          </View>
+          <Ionicons name='chevron-forward' color='#4B5563' size={20} />
+        </View>
+      </Link>
     </View>
   )
 }
