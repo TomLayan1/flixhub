@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Image, ScrollView, Text, View } from 'react-native';
 import { Link } from 'expo-router'
 import Settings from '@/components/profileComponents/Settings';
 
@@ -30,5 +30,3 @@ const profile = () => {
 }
 
 export default profile
-
-const styles = StyleSheet.create({})

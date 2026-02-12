@@ -14,7 +14,7 @@ const Theme = () => {
       {/* Light mode */}
       <TouchableOpacity
         onPress={() => changeTheme('light')}
-        className={`w-1/2 ${theme === 'light' ? 'bg-[#0077B6]' : 'bg-[#1a1b20]'} flex-row items-center justify-center gap-4 py-3 rounded-lg`}
+        className={`w-1/2 ${theme === 'light' ? 'bg-[#0077B6]' : 'bg-grayBg'} flex-row items-center justify-center gap-4 py-4 rounded-lg`}
       >
         <Ionicons name='moon' color='#FFFFFF' size={20} />
         <Text className='text-lightText text-xl font-bold'>Light Mode</Text>
@@ -23,7 +23,7 @@ const Theme = () => {
       {/* Dark mode */}
       <TouchableOpacity
         onPress={() => changeTheme('dark')}
-        className={`w-1/2 ${theme === 'dark' ? 'bg-[#0077B6]' : 'bg-[#1a1b20]'} flex-row items-center justify-center gap-4 py-3 rounded-lg`}
+        className={`w-1/2 ${theme === 'dark' ? 'bg-[#0077B6]' : 'bg-grayBg'} flex-row items-center justify-center gap-4 py-4 rounded-lg`}
       >
         <Ionicons name='sunny' color='#FFFFFF' size={20} />
         <Text className='text-lightText text-xl font-bold'>Dark Mode</Text>

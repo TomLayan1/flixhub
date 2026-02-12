@@ -19,16 +19,20 @@ const PLANS: PlanType[] = [
 ]
 
 type PlanPropsType = {
-  selectedPlan: PlanType | null;
-  setSelectedPlan: React.Dispatch<React.SetStateAction<PlanType | null>>;
+  plan: PlanType | null;
+  setPlan: React.Dispatch<React.SetStateAction<PlanType | null>>;
   setSuccessful: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Plan = ({ selectedPlan, setSelectedPlan, setSuccessful }: PlanPropsType) => {
+const Plan = ({ plan, setPlan, setSuccessful }: PlanPropsType) => {
   
   const selectPlan = (value: string) => {
     const selectedPlan = PLANS?.find(plan => plan.name === value);
-    selectedPlan && setSelectedPlan(selectedPlan);
+    selectedPlan && setPlan(selectedPlan);
+  }
+
+  const handleSubscription = () => {
+    plan && setSuccessful(true)
   }
 
   return (
@@ -37,12 +41,12 @@ const Plan = ({ selectedPlan, setSelectedPlan, setSuccessful }: PlanPropsType) =
           <TouchableOpacity
             onPress={() => selectPlan(item.name)}
             key={i} 
-            className={`w-full px-3 py-4 rounded-2xl border flex-row items-center justify-between mb-5 ${selectedPlan?.name === item.name ? 'border-blueColor' : 'border-grayText'}`}
+            className={`w-full px-3 py-4 rounded-2xl border flex-row items-center justify-between mb-5 ${plan?.name === item.name ? 'border-blueColor' : 'border-grayText'}`}
           >
             {/* <RadioButton value={item.name} /> */}
             <View className='flex-row items-center gap-5'>
-              <View className={`w-[22px] h-[22px] items-center justify-center rounded-full ${selectedPlan?.name === item.name ? 'border-2 border-blueColor' : 'border border-grayText'}`}>
-                {selectedPlan?.name === item.name && <View className='bg-blueColor w-[13px] h-[13px] rounded-full'></View>}
+              <View className={`w-[22px] h-[22px] items-center justify-center rounded-full ${plan?.name === item.name ? 'border-2 border-blueColor' : 'border border-grayText'}`}>
+                {plan?.name === item.name && <View className='bg-blueColor w-[13px] h-[13px] rounded-full'></View>}
               </View>
               <View>
                 <Text className='text-lightText text-2xl font-bold'>{item.name}</Text>
@@ -56,7 +60,7 @@ const Plan = ({ selectedPlan, setSelectedPlan, setSuccessful }: PlanPropsType) =
           </TouchableOpacity>
         ))}
 
-        <TouchableOpacity onPress={() => setSuccessful(true)} className='bg-blueColor w-full py-4 rounded-full mb-5'>
+        <TouchableOpacity onPress={handleSubscription} className='bg-blueColor w-full py-4 rounded-full mb-5'>
           <Text className='text-lightText text-center text-xl font-bold'>Continue for Payment</Text>
         </TouchableOpacity>
         <Text className='text-lightText text-lg text-center'>Terms of use | Privacy Policy | Restore</Text>

@@ -15,7 +15,7 @@ const SUB_BENEFIT: string[] = [
 
 
 const subscription = () => {
-  const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(null);
+  const [plan, setPlan] = useState<PlanType | null>(null);
   const [successful, setSuccessful] = useState<boolean>(false);
 
   return (
@@ -23,7 +23,7 @@ const subscription = () => {
       showsVerticalScrollIndicator={false}
       className='flex-1 bg-darkBg'
     >
-      {selectedPlan && successful && <Success setSuccessful={setSuccessful} />}
+      {plan && successful && <Success setSuccessful={setSuccessful} />}
       <View className=' pt-28 px-5'>
         <View className='mx-auto p-6 bg-blueColor/10 rounded-full mb-6'>
           <View className='w-[140px] h-[140px] bg-blueColor/20 items-center justify-center rounded-full'>
@@ -46,7 +46,7 @@ const subscription = () => {
         </View>
 
         {/* Subscription plans */}
-        <Plan selectedPlan={selectedPlan} setSelectedPlan={setSelectedPlan} setSuccessful={setSuccessful} />
+        <Plan plan={plan} setPlan={setPlan} setSuccessful={setSuccessful} />
       </View>
     </ScrollView>
   )

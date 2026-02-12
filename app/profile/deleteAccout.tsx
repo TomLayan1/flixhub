@@ -32,7 +32,7 @@ const deleteAccout = () => {
           </View>
         </View>
         <View className='w-full flex-row items-center justify-between'>
-          <Link href='/(tabs)/profile' className='w-[48%] text-lightText text-xl text-center bg-grayText py-4 rounded-full'>Cancel</Link>
+          <Link href='/(tabs)/profile' className='w-[48%] text-lightText text-xl text-center bg-grayBg py-4 rounded-full'>Cancel</Link>
           <TouchableOpacity className='w-[48%] bg-blueColor py-4 rounded-full'>
             <Text className='text-lightText text-xl text-center'>Delete</Text>
           </TouchableOpacity>
