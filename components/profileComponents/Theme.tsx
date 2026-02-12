@@ -16,7 +16,7 @@ const Theme = () => {
         onPress={() => changeTheme('light')}
         className={`w-1/2 ${theme === 'light' ? 'bg-[#0077B6]' : 'bg-grayBg'} flex-row items-center justify-center gap-4 py-4 rounded-lg`}
       >
-        <Ionicons name='moon' color='#FFFFFF' size={20} />
+        <Ionicons name='sunny' color='#FFFFFF' size={20} />
         <Text className='text-lightText text-xl font-bold'>Light Mode</Text>
       </TouchableOpacity>
 
@@ -25,7 +25,7 @@ const Theme = () => {
         onPress={() => changeTheme('dark')}
         className={`w-1/2 ${theme === 'dark' ? 'bg-[#0077B6]' : 'bg-grayBg'} flex-row items-center justify-center gap-4 py-4 rounded-lg`}
       >
-        <Ionicons name='sunny' color='#FFFFFF' size={20} />
+        <Ionicons name='moon' color='#FFFFFF' size={20} />
         <Text className='text-lightText text-xl font-bold'>Dark Mode</Text>
       </TouchableOpacity>
     </View>
