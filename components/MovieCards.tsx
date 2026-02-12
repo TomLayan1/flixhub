@@ -30,7 +30,7 @@ const MovieCards: React.FC<MovieCardsType> = ({ id, title, poster_path, vote_ave
         </View>
         <View className='pl-1'>
           <Text 
-            className='text-textDark text-lg mb-1'
+            className='text-lightText text-lg mb-1'
             numberOfLines={1}
           >{title}</Text>
           <View className='flex-row'>

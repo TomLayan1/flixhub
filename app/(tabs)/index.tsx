@@ -49,7 +49,7 @@ const index = () => {
 
         {trendingMovies && (
           <>
-            <Text className='text-textDark text-2xl font-bold ml-2 mt-5 mb-2.5'>Trending Movies</Text>
+            <Text className='text-lightText text-2xl font-bold ml-2 mt-5 mb-2.5'>Trending Movies</Text>
             <FlatList 
               data={trendingMovies}
               horizontal
@@ -64,7 +64,7 @@ const index = () => {
 
         {/* Recent movies */}
         <View className=''>
-          <Text className='text-textDark text-2xl font-bold ml-2 mt-5 mb-2.5'>Movies</Text>
+          <Text className='text-lightText text-2xl font-bold ml-2 mt-5 mb-2.5'>Movies</Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -77,7 +77,7 @@ const index = () => {
 
         {/* Recent movies */}
         <View className='mb-28'>
-          <Text className='text-textDark text-2xl font-bold ml-2 mt-5 mb-2.5'>Series</Text>
+          <Text className='text-lightText text-2xl font-bold ml-2 mt-5 mb-2.5'>Series</Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}

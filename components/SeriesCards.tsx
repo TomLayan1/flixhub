@@ -30,7 +30,7 @@ const SeriesCards: React.FC<MovieCardsType> = ({ id, original_name, poster_path,
         </View>
         <View className='pl-1'>
           <Text
-            className='text-textDark text-lg mb-1'
+            className='text-lightText text-lg mb-1'
             numberOfLines={1}
           >{original_name}</Text>
           <View className='flex-row'>

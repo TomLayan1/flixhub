@@ -66,7 +66,7 @@ const search = () => {
           <>
             {isLoading && (<ActivityIndicator size="large" color="#0077B6" className='mt-10 self-center' />)}
             {!isLoading && !error && movies && movies?.length > 0 && (
-              <Text className='text-textDark text-2xl font-bold ml-2 mt-4 mb-2'>Search Result for {searchQuery}</Text>
+              <Text className='text-lightText text-2xl font-bold ml-2 mt-4 mb-2'>Search Result for {searchQuery}</Text>
             )}
           </>
         )}

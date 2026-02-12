@@ -24,7 +24,7 @@ const TrendingMovieCards: React.FC<MovieCardsType> = ({ movie_id, title, poster_
         </View>
         <Text className='text-blueColor text-8xl font-bold absolute bottom-7'>{index + 1}</Text>
         <Text 
-          className='text-textDark text-lg ml-1 mb-1'
+          className='text-lightText text-lg ml-1 mb-1'
           numberOfLines={1}
         >{title}</Text>
       </TouchableOpacity>
