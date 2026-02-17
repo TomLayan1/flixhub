@@ -3,13 +3,14 @@ import React from 'react';
 import { useRouter } from 'expo-router';
 import { useFetch } from '@/hooks/useFetch';
 import { Ionicons } from '@expo/vector-icons';
-import { getTrendingMovies } from '@/services/appwrite';
+import { getSavedMovies, getTrendingMovies } from '@/services/appwrite';
 import SavedCard from '@/components/saved/savedCard';
 
 const saved = () => {
   const router = useRouter();
 
-    const { data: trendingMovies, isLoading: trendingLoadind, error: trendingError } = useFetch(getTrendingMovies);
+    const { data: trendingMovies, isLoading: trendingLoadind, error: trendingError } = useFetch(getSavedMovies);
+    console.log(trendingMovies);
   
   return (
     <View 

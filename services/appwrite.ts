@@ -1,9 +1,11 @@
 import { Client, Databases, ID, Query } from 'react-native-appwrite';
 import { MovieType, TrendingMoviesType } from "@/interfaces";
+
 const ENDPOINT = process.env.EXPO_PUBLIC_APPWRITE_ENDPOINT!;
 const PROJECT_ID = process.env.EXPO_PUBLIC_APPWRITE_PROJECT_ID!;
 const DATABASE_ID = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!;
 const COLLECTION_ID = process.env.EXPO_PUBLIC_APPWRITE_METRIX_ID!;
+const SAVED_ID = process.env.EXPO_PUBLIC_APPWRITE_SAVED_ID!;
 
 const client = new Client()
   .setEndpoint(ENDPOINT)
@@ -74,6 +76,70 @@ export const getTrendingMovies = async(): Promise<TrendingMoviesType[] | undefin
     return result?.documents as unknown as TrendingMoviesType[];
   }
   catch(err) {
+    console.log(err);
+    return undefined
+  }
+}
+
+export const updatedSavedMovies = async( movies: MovieType ) => {
+  const result = await database.listDocuments(
+    DATABASE_ID,
+    SAVED_ID,
+    [
+      Query.equal('movie_id', movies.id),
+      Query.limit(1)
+    ],
+  );
+
+  console.log(result);
+
+
+  try {
+    if (result.documents.length > 0 && movies) {
+      // Check if the movie is already saved
+      // If movie is found keep the movie
+      const alreadySaved = result.documents[0];
+
+      await database.updateDocument(
+        DATABASE_ID,
+        COLLECTION_ID,
+        alreadySaved.$id,
+      )
+
+      return { saved: false }
+    } else {
+      // If not found, add search to database
+      await database.createDocument(
+        DATABASE_ID,
+        COLLECTION_ID,
+        ID.unique(),
+        {
+          poster_url: `https://image.tmdb.org/t/p/w500${movies.poster_path}`,
+          movie_id: movies.id,
+          title: movies.title
+        }
+      )
+
+      return { saved: true}
+    }
+  }
+  catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+export const getSavedMovies = async (): Promise<TrendingMoviesType[] | undefined> => {
+  try {
+    const result = await database.listDocuments(
+      DATABASE_ID,
+      SAVED_ID,
+      [Query.limit(5)],
+    );
+
+    return result?.documents as unknown as TrendingMoviesType[];
+  }
+  catch (err) {
     console.log(err);
     return undefined
   }

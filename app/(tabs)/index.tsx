@@ -9,6 +9,7 @@ import MovieCards from '@/components/MovieCards';
 import { getTrendingMovies } from '@/services/appwrite';
 import TrendingMovieCards from '@/components/TrendingMovies';
 import SeriesCards from '@/components/SeriesCards';
+import Carousel from '@/components/Carousel';
 
 // Banner
 const BANNER = require('../../assets/flixhubimages/john-wick.jpeg');
@@ -39,8 +40,9 @@ const index = () => {
       <ScrollView className='flex-1'
         showsVerticalScrollIndicator={false}
       >
-        <View className='w-full h-[450px]'>
-          <ImageBackground source={BANNER} className='w-full h-full' />
+        <View className='w-full h-[490px]'>
+          <Carousel />
+          {/* <ImageBackground source={BANNER} className='w-full h-full' /> */}
             <SearchBar
               onPress={() => router.push('/search')}
               placeholder='Search for a movie'
