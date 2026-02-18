@@ -12,6 +12,13 @@ const client = new Client()
   .setProject(PROJECT_ID)
 
 const database = new Databases(client);
+
+export type savedInputs = {
+  id: number;
+  title: string;
+  poster_path: string | null
+}
+
 // Track user search
 export const updateSearchQuery = async(query: string, movies: MovieType ) => {
   const result = await database.listDocuments({
@@ -62,6 +69,8 @@ export const updateSearchQuery = async(query: string, movies: MovieType ) => {
   }
 }
 
+
+
 export const getTrendingMovies = async(): Promise<TrendingMoviesType[] | undefined> => {
   try {
     const result = await database.listDocuments({
@@ -81,51 +90,48 @@ export const getTrendingMovies = async(): Promise<TrendingMoviesType[] | undefin
   }
 }
 
-export const updatedSavedMovies = async( movies: MovieType ) => {
-  const result = await database.listDocuments(
-    DATABASE_ID,
-    SAVED_ID,
-    [
-      Query.equal('movie_id', movies.id),
-      Query.limit(1)
-    ],
-  );
-
-  console.log(result);
-
-
+export const toggleSavedMovies = async( movies: savedInputs ) => {
   try {
+    const result = await database.listDocuments(
+      DATABASE_ID,
+      SAVED_ID,
+      [
+        Query.equal('movie_id', movies.id),
+        Query.limit(1)
+      ],
+    );
+    console.log(result);
+    
     if (result.documents.length > 0 && movies) {
       // Check if the movie is already saved
       // If movie is found keep the movie
-      const alreadySaved = result.documents[0];
-
-      await database.updateDocument(
+      const docId = result.documents[0].$id;
+  
+      await database.deleteDocument(
         DATABASE_ID,
         COLLECTION_ID,
-        alreadySaved.$id,
+        docId,
       )
-
+  
       return { saved: false }
-    } else {
-      // If not found, add search to database
-      await database.createDocument(
-        DATABASE_ID,
-        COLLECTION_ID,
-        ID.unique(),
-        {
-          poster_url: `https://image.tmdb.org/t/p/w500${movies.poster_path}`,
-          movie_id: movies.id,
-          title: movies.title
-        }
-      )
-
-      return { saved: true}
     }
+
+    // If not found, add search to database
+    await database.createDocument(
+      DATABASE_ID,
+      SAVED_ID,
+      ID.unique(),
+      {
+        poster_url: movies?.poster_path ? `https://image.tmdb.org/t/p/w500${movies.poster_path}` : null,
+        movie_id: movies.id,
+        title: movies.title
+      }
+    )
+
+    return { saved: true}
   }
   catch (err) {
-    console.log(err);
-    throw err;
+    throw err
   }
 }
 

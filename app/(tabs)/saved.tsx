@@ -9,8 +9,7 @@ import SavedCard from '@/components/saved/savedCard';
 const saved = () => {
   const router = useRouter();
 
-    const { data: trendingMovies, isLoading: trendingLoadind, error: trendingError } = useFetch(getSavedMovies);
-    console.log(trendingMovies);
+  const { data: trendingMovies, isLoading: trendingLoadind, error: trendingError } = useFetch(getSavedMovies);
   
   return (
     <View 

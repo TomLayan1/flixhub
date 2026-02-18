@@ -1,22 +1,54 @@
 import { ActivityIndicator, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useLocalSearchParams } from 'expo-router'
 import useFetch from '@/hooks/useFetch';
 import { fetchMovieDetails } from '@/services/api';
-import { DetailsType } from '@/interfaces';
+import { toggleSavedMovies } from '@/services/appwrite';
 import { Ionicons } from '@expo/vector-icons';
+import { DetailsType } from '@/interfaces';
 
 const MovieDetails = () => {
   const { id } = useLocalSearchParams<{ id: string}>();
-  const { data: details, isLoading: detailLoading } = useFetch(() => fetchMovieDetails(id as string))
+  const { data: details, isLoading: detailLoading } = useFetch<DetailsType>(() => fetchMovieDetails(id as string))
   console.log(details)
+
+  const [saving, setSaving] = useState<boolean>(false);
+  const [saved, setSaved] = useState<boolean | null>(null);
+
+  const movieForSaved = useMemo(() => {
+    if (!details) return null;
+
+    return {
+      id: details.id,
+      title: details.title,
+      poster_path: details.poster_path,
+    }
+  }, [details]);
+
+  const onPressSaved = async() => {
+    if (!movieForSaved) return;
+    console.log('Testing: ', movieForSaved?.id)
+    try{
+      setSaving(true);
+      if (movieForSaved) {
+        const response = await toggleSavedMovies(movieForSaved)
+        setSaved(response?.saved)
+      }
+    }
+    catch(err) {
+      throw err
+    }
+    finally {
+      setSaving(false)
+    }
+  }
 
   return (
     <ScrollView className='flex-1 bg-darkBg'>
       {detailLoading ? (
         <ActivityIndicator size="large" color="blue" className='mt-10 self-center' />
       ):(
-        <View className='flex-1'>
+        <View className='flex-1 pb-14'>
           <View className='w-full h-[550px] mb-4 relative'>
             <Image  
               source={{
@@ -44,18 +76,25 @@ const MovieDetails = () => {
                 ))}
               </View>
             </View>
+            <TouchableOpacity
+              onPress={onPressSaved}
+              disabled={saving}
+              className='w-[80px] flex-row items-center gap-2 bg-blueColor/15 border border-blueColor rounded-full p-3 mb-6'>
+              <Ionicons name='bookmark-outline' color='#0077B6' size={19} />
+              <Text className='text-lightText'>{saving ? 'Saving...' : saved ? 'Saved' : 'Save'}</Text>
+            </TouchableOpacity>
             <View className='mb-5'>
               <Text className='text-blueColor text-2xl mb-3'>Overview</Text>
               <Text className='text-lightText text-lg'>{details?.overview}</Text>
             </View>
             <View className='flex-row gap-14 mb-3'>
-                {details?.budget > 0 && <View className=''>
+                {details?.budget && details.budget > 0 && <View className=''>
                 <Text className='text-blueColor text-lg mb-1'>Budget</Text>
-                <Text className='text-lightText text-lg'>{`${details?.budget / 1_000_000} million`}</Text>
+                <Text className='text-lightText text-lg'>{`${details.budget / 1_000_000} million`}</Text>
               </View>}
-                {details?.revunue > 0 && <View className=''>
+                {details?.revenue && details.revenue > 0 && <View className=''>
                   <Text className='text-blueColor text-lg mb-1'>Revenue</Text>
-                  <Text className='text-lightText text-lg'>{`${details?.revunue / 1_000_000} million`}</Text>
+                  <Text className='text-lightText text-lg'>{`${details.revenue / 1_000_000} million`}</Text>
               </View>}
             </View>
             <View>

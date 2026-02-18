@@ -1,4 +1,4 @@
-import { ScrollView, Text, View, ImageBackground, ActivityIndicator, FlatList } from 'react-native'
+import { ScrollView, Text, View, ActivityIndicator, FlatList } from 'react-native'
 import React from 'react'
 import SearchBar from '@/components/SearchBar';
 import { useRouter } from 'expo-router';
@@ -42,7 +42,6 @@ const index = () => {
       >
         <View className='w-full h-[490px]'>
           <Carousel />
-          {/* <ImageBackground source={BANNER} className='w-full h-full' /> */}
             <SearchBar
               onPress={() => router.push('/search')}
               placeholder='Search for a movie'

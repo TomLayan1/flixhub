@@ -34,6 +34,10 @@ export interface SeriesType {
   vote_average: number;
   vote_count: number;
 }
+interface companies {
+  id: number;
+  name: string;
+}
 export interface DetailsType {
   backdrop_path: string;
   genre_ids: number[];
@@ -48,6 +52,12 @@ export interface DetailsType {
   video: boolean;
   vote_average: number;
   vote_count: number;
+
+  origin_country: string;
+  genres: string[];
+  budget: number;
+  revenue: number;
+  production_companies: companies[]
 }
 export interface PlanType {
   id: number;

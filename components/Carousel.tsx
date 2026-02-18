@@ -9,19 +9,12 @@ const { width } = Dimensions.get('window')
 const AUTO_SCROLL_INTERVAL = 3000
 
 const Carousel = () => {
-  const { data: movies } = useFetch<MovieType[]>(() =>
-    fetchMovies({
-      query: '',
-    })
-  )
+  const { data: movies } = useFetch<MovieType[]>(() =>fetchMovies({
+    query: '',
+  }))
 
-  // Select the first 8 movies for the slider
   const CAROUSEL_MOVIES = movies?.slice(0, 8) ?? []
 
-  /**
-   * "Infinite" carousel trick:
-   * duplicate list -> jump back to the same index in the first half when you reach the second half
-   */
   const DATA = useMemo(() => {
     if (CAROUSEL_MOVIES.length === 0) return []
     return [...CAROUSEL_MOVIES, ...CAROUSEL_MOVIES]
@@ -73,14 +66,11 @@ const Carousel = () => {
     }
 
     return () => stopAutoScroll()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemLength])
 
-  // Keep the "infinite" illusion by jumping when we pass the first half
   const normalizeIfNeeded = (newIndex: number) => {
     if (itemLength === 0) return
 
-    // When we reach the duplicated half, jump back (same visual slide) without animation
     if (newIndex >= itemLength) {
       const normalized = newIndex - itemLength
       setIndex(normalized)
@@ -100,7 +90,7 @@ const Carousel = () => {
   }
 
   return (
-    <View className="w-full h-full bg-red-800">
+    <View className="w-full h-full">
       <FlatList
         ref={flatListRef}
         horizontal
@@ -118,20 +108,14 @@ const Carousel = () => {
           stopAutoScroll()
         }}
         onScrollEndDrag={() => {
-          // resume after a short delay so it doesn't fight the user
           setTimeout(() => {
             setIsInteracting(false)
             startAutoScroll()
           }, 500)
         }}
-        // getItemLayout={(_, index) => ({
-        //   length: width,
-        //   offset: width * 1,
-        //   index: index
-        // })}
         renderItem={({ item }) => {
           return (
-            <View style={{ width }} className="bg-blue-950">
+            <View style={{ width }}>
               <Image
                 source={{
                   uri: item.poster_path
@@ -139,7 +123,6 @@ const Carousel = () => {
                     : 'https://placehold.co/600x400/1a1a1a/ffffff.png',
                 }}
                 className="w-full h-full"
-                // resizeMode="contain"
               />
             </View>
           )
