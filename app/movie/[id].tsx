@@ -10,7 +10,6 @@ import { DetailsType } from '@/interfaces';
 const MovieDetails = () => {
   const { id } = useLocalSearchParams<{ id: string}>();
   const { data: details, isLoading: detailLoading } = useFetch<DetailsType>(() => fetchMovieDetails(id as string))
-  console.log(details)
 
   const [saving, setSaving] = useState<boolean>(false);
   const [saved, setSaved] = useState<boolean | null>(null);
@@ -26,12 +25,16 @@ const MovieDetails = () => {
   }, [details]);
 
   const onPressSaved = async() => {
-    if (!movieForSaved) return;
+    if (!details) return;
     console.log('Testing: ', movieForSaved?.id)
     try{
       setSaving(true);
       if (movieForSaved) {
-        const response = await toggleSavedMovies(movieForSaved)
+        const response = await toggleSavedMovies({
+          id: details.id,
+          title: details.title,
+          poster_path: details.poster_path
+        })
         setSaved(response?.saved)
       }
     }
@@ -88,14 +91,15 @@ const MovieDetails = () => {
               <Text className='text-lightText text-lg'>{details?.overview}</Text>
             </View>
             <View className='flex-row gap-14 mb-3'>
-                {details?.budget && details.budget > 0 && <View className=''>
+              {details?.budget && details.budget > 0 && 
+              <View className=''>
                 <Text className='text-blueColor text-lg mb-1'>Budget</Text>
                 <Text className='text-lightText text-lg'>{`${details.budget / 1_000_000} million`}</Text>
               </View>}
-                {details?.revenue && details.revenue > 0 && <View className=''>
-                  <Text className='text-blueColor text-lg mb-1'>Revenue</Text>
-                  <Text className='text-lightText text-lg'>{`${details.revenue / 1_000_000} million`}</Text>
-              </View>}
+              {details?.revenue && details.revenue > 0 && <View className=''>
+              <Text className='text-blueColor text-lg mb-1'>Revenue</Text>
+              <Text className='text-lightText text-lg'>{`${details.revenue / 1_000_000} million`}</Text>
+            </View>}
             </View>
             <View>
               <Text className='text-blueColor text-lg mb-2'>Production Companies</Text>

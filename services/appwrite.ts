@@ -92,6 +92,7 @@ export const getTrendingMovies = async(): Promise<TrendingMoviesType[] | undefin
 
 export const toggleSavedMovies = async( movies: savedInputs ) => {
   try {
+    const movieId = Number(movies?.id)
     const result = await database.listDocuments(
       DATABASE_ID,
       SAVED_ID,
@@ -109,7 +110,7 @@ export const toggleSavedMovies = async( movies: savedInputs ) => {
   
       await database.deleteDocument(
         DATABASE_ID,
-        COLLECTION_ID,
+        SAVED_ID,
         docId,
       )
   

@@ -9,8 +9,9 @@ import SavedCard from '@/components/saved/savedCard';
 const saved = () => {
   const router = useRouter();
 
-  const { data: trendingMovies, isLoading: trendingLoadind, error: trendingError } = useFetch(getSavedMovies);
-  
+  const { data: savedMovies, isLoading: trendingLoadind, error: trendingError } = useFetch(getSavedMovies);
+  console.log(savedMovies)
+
   return (
     <View 
       // showsVerticalScrollIndicator={false}
@@ -25,8 +26,8 @@ const saved = () => {
         </View>
       </View>
 
-      <FlatList
-        data={trendingMovies}
+      {/* <FlatList
+        data={savedMovies}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.movie_id.toString()}
         renderItem={({ item, index }) => {
@@ -34,7 +35,7 @@ const saved = () => {
             <SavedCard {...item} index={index}  />
           );
         }}
-      />
+      /> */}
     </View>
   )
 }
