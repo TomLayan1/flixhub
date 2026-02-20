@@ -18,7 +18,7 @@ const saved = () => {
     >
       <View className='flex-row mb-7'>
         <Pressable onPress={() => router.back()}>
-          <Ionicons name='chevron-back' size={21} color='#FFFFFF' />
+          <Ionicons name='chevron-back' size={20} color='#FFFFFF' />
         </Pressable>
         <View className='flex-1'>
           <Text className='text-lightText text-2xl text-center font-bold'>Saved</Text>

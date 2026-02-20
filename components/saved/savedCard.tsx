@@ -14,7 +14,7 @@ const SavedCard:React.FC<SavedCardType> = ({ id, title, posterUrl}) => {
       <TouchableOpacity className='flex-row items-start gap-4'>
         <Image 
           source={{ uri: `https://image.tmdb.org/t/p/w500${posterUrl}`}}
-          className='w-[75px] h-[100px]'
+          className='w-[50px] h-[70px]'
         />
         <Text className='text-lightText text- font-bold'>{title}</Text>
       </TouchableOpacity>
