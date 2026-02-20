@@ -3,18 +3,17 @@ import React from 'react';
 import { Link } from 'expo-router';
 
 export interface SavedCardType {
-  movie_id: number;
+  id: number;
   title: string;
-  poster_url: string
-  index: number
+  posterUrl: string
 }
 
-const SavedCard:React.FC<SavedCardType> = ({ movie_id, title, poster_url, index}) => {
+const SavedCard:React.FC<SavedCardType> = ({ id, title, posterUrl}) => {
   return (
-    <Link href={`/movie/${movie_id}`} asChild className='mb-5'>
+    <Link href={`/movie/${id}`} asChild className='mb-5'>
       <TouchableOpacity className='flex-row items-start gap-4'>
         <Image 
-          source={{ uri: poster_url}}
+          source={{ uri: `https://image.tmdb.org/t/p/w500${posterUrl}`}}
           className='w-[75px] h-[100px]'
         />
         <Text className='text-lightText text- font-bold'>{title}</Text>

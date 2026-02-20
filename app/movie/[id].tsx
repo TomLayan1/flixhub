@@ -31,7 +31,7 @@ const MovieDetails = () => {
       setSaving(true);
       if (movieForSaved) {
         const response = await toggleSavedMovies({
-          id: details.id,
+          movie_id: details.id,
           title: details.title,
           poster_path: details.poster_path
         })

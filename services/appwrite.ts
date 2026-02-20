@@ -13,10 +13,22 @@ const client = new Client()
 
 const database = new Databases(client);
 
-export type savedInputs = {
-  id: number;
+type SavedInputsType = {
+  movie_id: number;
   title: string;
-  poster_path: string | null
+  poster_path: string
+}
+type SavedMovieDocType = {
+  $id: string;
+  movie_id: number;
+  title: string;
+  poster_url: string;
+}
+
+type GetSavedMoviesType = {
+  limit?: number; //How many to fetch per page
+  cursorId: string;
+  order: "newest" | "oldest"
 }
 
 // Track user search
@@ -90,64 +102,82 @@ export const getTrendingMovies = async(): Promise<TrendingMoviesType[] | undefin
   }
 }
 
-export const toggleSavedMovies = async( movies: savedInputs ) => {
+export const toggleSavedMovies = async (movie: SavedInputsType) => {
   try {
-    const movieId = Number(movies?.id)
+    const movieId = Number(movie.movie_id);
+
+    if(!Number.isFinite(movieId)) {
+      throw new Error(`toggleSavedMovies: invalid movie_id: ${movie.movie_id}`);
+    }
+
     const result = await database.listDocuments(
       DATABASE_ID,
       SAVED_ID,
       [
-        Query.equal('movie_id', movies.id),
-        Query.limit(1)
-      ],
+        Query.equal("movie_id", movieId),
+        Query.limit(1),
+        Query.select(["$id", "movie_id", "title", "poster_url"])
+      ]
     );
-    console.log(result);
-    
-    if (result.documents.length > 0 && movies) {
-      // Check if the movie is already saved
-      // If movie is found keep the movie
-      const docId = result.documents[0].$id;
-  
-      await database.deleteDocument(
-        DATABASE_ID,
-        SAVED_ID,
-        docId,
-      )
-  
-      return { saved: false }
+
+    const existing = result.documents?.[0];
+
+    if (existing) {
+      await database.deleteDocument(DATABASE_ID, SAVED_ID, existing.$id);
+      return { saved: false, movie: null };
     }
 
-    // If not found, add search to database
-    await database.createDocument(
+    const created = await database.createDocument(
       DATABASE_ID,
       SAVED_ID,
       ID.unique(),
       {
-        poster_url: movies?.poster_path ? `https://image.tmdb.org/t/p/w500${movies.poster_path}` : null,
-        movie_id: movies.id,
-        title: movies.title
+        poster_url: movie.poster_path
+          ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+          : "",
+        movie_id: movie.movie_id,
+        title: movie.title,
       }
-    )
+    );
 
-    return { saved: true}
+    // Return only the fields you want (no $createdAt, etc.)
+    return {
+      saved: true,
+      movie: {
+        id: created.movie_id,
+        title: created.title,
+        poster_path: created.poster_url
+          ? created.poster_url.replace("https://image.tmdb.org/t/p/w500", "")
+          : "",
+      },
+    };
+  } catch (err) {
+    console.log(err);
+    throw err;
   }
-  catch (err) {
-    throw err
-  }
-}
+};
 
-export const getSavedMovies = async (): Promise<TrendingMoviesType[] | undefined> => {
+export const getSavedMovies = async () => {
   try {
     const result = await database.listDocuments(
       DATABASE_ID,
       SAVED_ID,
-      [Query.limit(5)],
+      [
+        Query.limit(100), // adjust as needed
+        Query.select(["movie_id", "title", "poster_url"]),
+      ]
     );
 
-    return result?.documents as unknown as TrendingMoviesType[];
-  }
-  catch (err) {
+    // Normalize into the same shape used elsewhere in your app
+    return (result.documents ?? []).map((doc: any) => ({
+      id: Number(doc.movie_id),
+      title: doc.title ?? "",
+      poster_path: doc.poster_url
+        ? String(doc.poster_url).replace("https://image.tmdb.org/t/p/w500", "")
+        : "",
+    }));
+  } catch (err) {
     console.log(err);
-    return undefined
+    throw err;
   }
-}
+};
